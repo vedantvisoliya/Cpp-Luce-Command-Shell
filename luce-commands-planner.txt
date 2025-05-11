@@ -1,0 +1,19 @@
+LUCE
+
+commands to add:
+type - done 
+exit - done
+echo - done
+ls - done
+cd - done
+cls - done
+mkdir, md - done
+rmdir, rd - done
+del, rm - done 
+rename - done
+whoami - not done
+find - done 
+date and time - done
+hostname - not done
+ver - not done
+touch - done
