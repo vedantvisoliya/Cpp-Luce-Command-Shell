@@ -1,0 +1,12 @@
+| Code | Color   |
+| ---- | ------- |
+| 30   | Black   |
+| 31   | Red     |
+| 32   | Green   |
+| 33   | Yellow  |
+| 34   | Blue    |
+| 35   | Magenta |
+| 36   | Cyan    |
+| 37   | White   |
+Bold or bright variants: Add 1; before the code (e.g., \033[1;31m for bright red).
+back to normal code: \033[0m

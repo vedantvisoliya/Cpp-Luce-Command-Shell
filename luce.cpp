@@ -76,7 +76,7 @@ void listDirectoryContent(){
     try{
         // checking if the path is valid
         if(!fs::is_directory(dirPath)){
-            cerr << "Error" << ": directory not found" << endl;
+            cerr << "\033[31m" << "Error" << ": directory not found" << "\033[0m" << endl;
             return;
         }
 
@@ -97,17 +97,17 @@ void listDirectoryContent(){
         }
     }
     catch(const fs::filesystem_error& e){
-        cerr << "Error accessing directory: " << e.what() << endl;
+        cerr << "\033[31m" << "Error accessing directory: " << e.what() << "\033[0m" << endl;
     }
 }
 
 void getCurrentPath(){
     string currentPath = fs::current_path().string();
     try{    
-        cout << currentPath;  
+        cout << "LCS " << currentPath;  
     }
     catch (const fs::filesystem_error& e){
-        cerr << "Error accessing path: " << e.what();
+        cerr << "\033[31m" << "Error accessing path: " << e.what() << "\033[0m" << endl;
     }
 }
 
@@ -116,41 +116,41 @@ void changeDirectory(string newPath){
         fs::current_path(newPath);
     }
     catch (const fs::filesystem_error& e){
-        cerr << "Error: " << e.what() << endl;
+        cerr << "\033[31m" << "Error: " << e.what() << "\033[0m" << endl;
     }
 }
 
 void createFile(string fileName){
     try{
         if(fs::exists(fileName)){
-            cerr << "Error: " << fileName << " already exists" << endl;
+            cerr << "\033[31m" << "Error: " << "\033[36m" << fileName << "\033[31m" << " already exists" << "\033[0m" << endl;
         }
         else{
             ofstream file(fileName);
-            cout << fileName << ": created successfully" << endl;
+            cout << "\033[32m" << "\033[36m" << fileName << "\033[32m" << ": created successfully" << "\033[0m" << endl;
         }
     }
     catch (const exception& e){
-        cerr << "Error: " << e.what() << endl;
+        cerr << "\033[31m" << "Error: " << e.what() << "\033[0m" << endl;
     }
 }
 
 void removeFileDir(string fileDirName){
     if(fs::exists(fileDirName)){
         fs::remove(fileDirName);
-        cout << fileDirName << " removed successfully" << endl;
+        cout << "\033[36m" << fileDirName << "\033[32m" << " removed successfully" << "\033[0m" << endl;
     }
     else{
-        cerr << "Error: " << fileDirName << " does not exists" << endl;
+        cerr << "\033[31m" << "Error: " << "\033[36m" << fileDirName << "\033[31m" << " does not exists" << "\033[0m" << endl;
     }
 }
 
 void checkFileOrDirExists(string fileOrDir){
     if(fs::exists(fileOrDir)){
-        cout << fileOrDir << ": found" << endl;
+        cout << "\033[36m" <<  fileOrDir << "\033[32m" << ": found" << "\033[0m" << endl;
     }
     else{
-        cerr << "Error: " << fileOrDir << " not found" << endl;
+        cerr << "\033[31m" << "Error: " << "\033[36m" << fileOrDir << " not found" << "\033[0m" << endl;
     }
 }
 
@@ -158,21 +158,21 @@ void getDateTime(){
     time_t timestamp;
     time(&timestamp);
     cout << endl;
-    cout << ctime(&timestamp) << endl;
+    cout << "\033[1;34m" << ctime(&timestamp) << "\033[0m" << endl;
 }
 
 void createDir(string dirName){
     try{
         if(fs::exists(dirName)){
-            cerr << "Error: " << dirName << " already exists" << endl;
+            cerr << "\033[31m" << "Error: " << "\033[36m" << dirName << "\033[31m" << " already exists" << "\033[0m" << endl;
         }
         else{
             fs::create_directory(dirName);
-            cout << dirName << ": created successfully" << endl;
+            cout << "\033[36m" << dirName << "\033[32m" << ": created successfully" << "\033[0m" << endl;
         }
     }
     catch (const fs::filesystem_error& e){
-        cerr << "Error: " << e.what() << endl;
+        cerr << "\033[31m]" << "Error: " << e.what() << "\033[0m" << endl;
     }
 }
 
@@ -183,17 +183,17 @@ void renameFileDir(string& input) {
     try {
         if (fs::exists(oldName)) {
             if (fs::exists(newName)) {
-                cerr << "Error: '" << newName << "' already exists." << endl;
+                cerr << "\033[31m" << "Error: '" << "\033[36m" << newName << "\033[31m" << "' already exists." << "\033[0m" << endl;
                 return;
             } else {
                 fs::rename(oldName, newName);
-                cout << "'" << oldName << "' renamed to '" << newName << "' successfully." << endl;
+                cout << "\033[32m]" << "'" << "\033[36m" << oldName << "\033[36m" << "' renamed to '" << "\033[36m" << newName << "\033[32m" << "' successfully." << "\033[0m" << endl;
             }
         } else {
-            cerr << "Error: '" << oldName << "' does not exist." << endl;
+            cerr << "\033[31m" << "Error: '" << "\033[36m" << oldName << "\033[31m" << "' does not exist." << "\033[0m" << endl;
         }
     } catch (const fs::filesystem_error& e) {
-        cerr << "Error: " << e.what() << endl;
+        cerr << "\033[31m" << "Error: " << e.what() << "\033[0m" << endl;
     }
 }
 
@@ -208,8 +208,11 @@ int main(){
 
     do{
         getCurrentPath();
+
         cout << "$ ";
+        cout << "\033[1;35m";
         getline(cin, input);
+        cout << "\033[0m";
 
         switch (isValid(input)){
             case exit0:
