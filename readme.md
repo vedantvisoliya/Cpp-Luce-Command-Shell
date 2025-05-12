@@ -2,6 +2,10 @@
 
 I have created a shell, which i named 'LUCE' that perform all the basic commands. I have used pure C++ language to complete the project.
 
+## Updates  
+    -> Added colors to the terminal.
+    -> New commands are added {no. (14, 15)}.
+
 # Run Locally
 #### --> dowload the <>code
 ```
@@ -91,4 +95,20 @@ $ rename oldName^newName
 ### 13. get-date - "to get current date and time"
 ```
 $ get-date
+```
+
+### 14. code - "opens the current directory/path in vs code"
+```
+$ code .
+```
+```
+$ code path
+```
+
+### 15. start - "opens the current directory/path in file explorer"
+```
+$ start .
+```
+```
+$ start path
 ```

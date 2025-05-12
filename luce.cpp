@@ -25,7 +25,9 @@ enum validCommands{
     md,
     rmdir,
     rd,
-    rename0
+    rename0,
+    code,
+    start,
 };
 
 validCommands isValid(string command){
@@ -47,6 +49,8 @@ validCommands isValid(string command){
     if(command == "rmdir"){return validCommands::rmdir;}
     if(command == "rd"){return validCommands::rd;}
     if(command == "rename"){return validCommands::rename0;}
+    if(command == "code"){return validCommands::code;}
+    if(command == "start"){return validCommands::start;}
     return validCommands::invalid;
 }
 
@@ -67,6 +71,8 @@ bool isValidType(string command){
     if(isValid(command) == rmdir){return true;}
     if(isValid(command) == rd){return true;}
     if(isValid(command) == rename0){return true;}
+    if(isValid(command) == code){return true;}
+    if(isValid(command) == start){return true;}
     return false;
 } 
 
@@ -187,7 +193,7 @@ void renameFileDir(string& input) {
                 return;
             } else {
                 fs::rename(oldName, newName);
-                cout << "\033[32m]" << "'" << "\033[36m" << oldName << "\033[36m" << "' renamed to '" << "\033[36m" << newName << "\033[32m" << "' successfully." << "\033[0m" << endl;
+                cout << "\033[32m" << "'" << "\033[36m" << oldName << "\033[36m" << "' renamed to '" << "\033[36m" << newName << "\033[32m" << "' successfully." << "\033[0m" << endl;
             }
         } else {
             cerr << "\033[31m" << "Error: '" << "\033[36m" << oldName << "\033[31m" << "' does not exist." << "\033[0m" << endl;
@@ -197,11 +203,46 @@ void renameFileDir(string& input) {
     }
 }
 
+void openVisualStudioCode(string input){
+    try
+    {
+        if(input == "."){
+            system("code .");
+        }
+        else {
+            string path = "code " + input;
+            system(path.c_str());
+        }    
+    }
+    catch(const exception& e)
+    {
+        cerr << "\033[31m" << e.what() << "\033[0m]" << endl;
+    }
+    
+}
+
+void openFileExplorer(string input){
+    try
+    {
+        if(input == "."){
+            system("start .");
+        }
+        else{
+            string path = "start " + input;
+            system(path.c_str());
+        }
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    } 
+}
+
 int main(){
     cout << "LUCE SHELL Version[1.0.0, 2024]" << endl;
     cout << "Copyright (C) Vedant Visoliya. All rights reserved." << endl;
     // varibles
-    bool done = false;
+    bool exit = false;
     string input;
     string newPath;
     // looping
@@ -216,7 +257,7 @@ int main(){
 
         switch (isValid(input)){
             case exit0:
-                done = true;
+                exit = true;
                 break;
             case echo:
                 input = input.substr(input.find(" ")+1, input.length());
@@ -293,12 +334,20 @@ int main(){
             case rename0:
                 renameFileDir(input);
                 break;
+            case code:
+                input = input.substr(input.find(" ")+1);
+                openVisualStudioCode(input);
+                break;
+            case start:
+                input = input.substr(input.find(" ")+1);
+                openFileExplorer(input);
+                break;
             default:
                 input = input.substr(0, input.find(" "));
                 cout << input << ": command not found" << endl;
                 break;
         }
 
-    }while(!done);
+    }while(!exit);
     return 0;
 }
